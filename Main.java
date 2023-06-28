@@ -78,9 +78,10 @@ public class Main {
         System.out.print("Enter the search key:");
         int searchKey = input.nextInt();
 
-        double startTime = System.nanoTime();
+        double startTime, endTime;
+        startTime = System.nanoTime();
         linearSearch(array, searchKey);
-        double endTime = System.nanoTime();
+        endTime = System.nanoTime();
         double durationLinear = (endTime - startTime);
 
 
@@ -106,6 +107,6 @@ public class Main {
         // something really weird is happening on my machine. The linearSearch2 method is faster when it shouldn't be and the % improvement is impossible.
         // testing with array of size 100,000 with values 0-99,999 searching for key = 0 the original linear search should be faster, but isn't?
         double percent = (100.0 * (durationLinear - durationLinear2)) / durationLinear;
-        System.out.println("linear improved took " +durationLinear2+ " nanoseconds and linear original took " +durationLinear+ " nanoseconds\n this is " +percent+ " percent better");
+        System.out.println("linear improved took " +durationLinear2+ " nanoseconds and linear original took " +durationLinear+ " nanoseconds\nthis is " +percent+ " percent better");
     }
 }
