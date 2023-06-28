@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     // normal linear search from start to finish
@@ -22,7 +23,7 @@ public class Main {
                 }
             }
         }else {
-            for (int i = 0; i < array.length; i++){
+            for (int i = array.length / 2; i < array.length; i++){
                 if (array[i] == key){
                     System.out.println("Search Key FOUND at index " + i);
                     return;
@@ -78,15 +79,14 @@ public class Main {
         System.out.print("Enter the search key:");
         int searchKey = input.nextInt();
 
-        double startTime, endTime;
-        startTime = System.nanoTime();
+        Arrays.sort(array);
+
+        double startTimel1 = System.nanoTime();
         linearSearch(array, searchKey);
-        endTime = System.nanoTime();
-        double durationLinear = (endTime - startTime);
+        double endTimel1 = System.nanoTime();
+        double durationLinear = (endTimel1 - startTimel1);
 
-
-        // implement sort later
-        startTime = System.nanoTime();
+        double startTimei = System.nanoTime();
         int location = interpolateSearch(array, searchKey);
         if (location == -1){
             System.out.println("Search key NOT FOUND");
@@ -94,18 +94,21 @@ public class Main {
         else{
             System.out.println("Search Key FOUND at index " + location);
         }
-        endTime = System.nanoTime();
-        double durationInterpolate = (endTime - startTime);
+        double endTimei = System.nanoTime();
+        double durationInterpolate = (endTimei - startTimei);
 
         System.out.println("linear took " +durationLinear+ " nanoseconds and interpolate took " + durationInterpolate + " nanoseconds");
 
-        startTime = System.nanoTime();
+        double startTimel2 = System.nanoTime();
         linearSearch2(array, searchKey);
-        endTime = System.nanoTime();
-        double durationLinear2 = (endTime - startTime);
+        double endTimel2 = System.nanoTime();
+        double durationLinear2 = (endTimel2 - startTimel2);
 
-        // something really weird is happening on my machine. The linearSearch2 method is faster when it shouldn't be and the % improvement is impossible.
-        // testing with array of size 100,000 with values 0-99,999 searching for key = 0 the original linear search should be faster, but isn't?
+        // something really weird is happening on my machine.
+        // testing with different sizes of arrays the performance is all over the place and often reduces speed?
+        // actually where the method is called changes performance. moving the lines 86 to 89 to after the interpolate code changes the run times.
+        // anywhere from -2000% to 99% improvement depending on code placement and size of array.
+
         double percent = (100.0 * (durationLinear - durationLinear2)) / durationLinear;
         System.out.println("linear improved took " +durationLinear2+ " nanoseconds and linear original took " +durationLinear+ " nanoseconds\nthis is " +percent+ " percent better");
     }
